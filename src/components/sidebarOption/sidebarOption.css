@@ -1,0 +1,37 @@
+.sidebarOption {
+  display: flex;
+  align-items: center;
+  color: #555;
+  font-weight: bold;
+  padding: 0 20px;
+  border-top-right-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+  cursor: pointer;
+  height: 2rem;
+  margin: 5px 0;
+}
+
+.sidebarOption > p {
+  display: none;
+}
+
+.sidebarOption > h3 {
+  font-size: 0.8125rem;
+  flex: 1;
+  margin-left: 0.9375rem;
+}
+
+.sidebarOption:hover > p {
+  display: inline;
+}
+
+.option--active > p {
+  display: inline !important;
+}
+
+.option--active,
+.option--active > h3,
+.sidebarOption:hover {
+  background-color: #f9f9f9;
+  font-weight: 900;
+}
