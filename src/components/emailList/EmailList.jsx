@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./list.css";
 import Checkbox from "@mui/material/Checkbox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -13,8 +13,27 @@ import Section from "../section/Section";
 import PeopleIcon from "@mui/icons-material/People";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import EmailRow from "../emailRow/EmailRow";
+import { db } from "../../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 const EmailList = () => {
+  const [emails, setEmails] = useState([]);
+  useEffect(() => {
+    const collectionRef = collection(db, "emails");
+    const q = query(collectionRef, orderBy("timestamp", "desc"));
+    const unsub = onSnapshot(q, (snapshot) => {
+      setEmails(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
+
+    return unsub;
+  }, []);
+
+  console.log("emails >>>", emails);
   return (
     <div className="emailList">
       <section className="emailList_settings">
@@ -51,18 +70,16 @@ const EmailList = () => {
       </sections>
 
       <section className="emailList_list">
-        <EmailRow
-          title="asfandyar"
-          subject="About Bootcamp"
-          description="I want to know the start date of bootcamp"
-          time="5pm"
-        />
-        <EmailRow
-          title="One Attachment"
-          subject="Internship"
-          description="My name is Asfandyar and I have an experience of 4 months in reactjs and I think I am suitable for this internship. Kindly consider me!"
-          time="5pm"
-        />
+        {emails.map(({ id, data: { to, subject, message, timestamp } }) => (
+          <EmailRow
+            key={id}
+            id={id}
+            title={to}
+            subject={subject}
+            description={message}
+            time={new Date(timestamp?.seconds * 1000).toUTCString()}
+          />
+        ))}
       </section>
     </div>
   );
