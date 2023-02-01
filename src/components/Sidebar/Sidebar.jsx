@@ -13,6 +13,8 @@ import SendIcon from "@mui/icons-material/Send";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
+import { openSendMessage } from "../../features/mailSlice";
 
 const style = {
   position: "absolute",
@@ -27,6 +29,7 @@ const style = {
 };
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,6 +38,7 @@ const Sidebar = () => {
       <Button
         startIcon={<EditIcon fontSize="large" />}
         className="sidebar_compose"
+        onClick={() => dispatch(openSendMessage())}
       >
         Compose
       </Button>
