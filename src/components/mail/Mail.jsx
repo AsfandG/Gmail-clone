@@ -16,9 +16,14 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardHideIcon from "@mui/icons-material/KeyboardHide";
 import PrintIcon from "@mui/icons-material/Print";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectOpenMail } from "../../features/mailSlice";
 
 const Mail = () => {
   const navigate = useNavigate();
+  const { selectedMail } = useSelector((store) => store.mail);
+  console.log("🚀 ~ file: Mail.jsx:25 ~ Mail ~ selectedMail", selectedMail);
+
   return (
     <section className="mail">
       <div className="mail_tools">
@@ -87,12 +92,12 @@ const Mail = () => {
       </div>
       <article className="mail_body">
         <section className="mail_bodyHeader">
-          <h3>Subject</h3>
-          <p>Title</p>
-          <p className="mail_time">8am</p>
+          <h3>{selectedMail?.subject}</h3>
+          <p>{selectedMail?.title}</p>
+          <p className="mail_time">{selectedMail?.time}</p>
         </section>
         <article className="mail_message">
-          <p>This will be the actual body of message.</p>
+          <p>{selectedMail?.description}</p>
         </article>
       </article>
     </section>

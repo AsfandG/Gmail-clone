@@ -1,6 +1,7 @@
 .sidebar {
   margin-top: 15px;
   flex: 0.15;
+  border-right: 1px solid #ccc;
 }
 
 .sidebar_compose {
